@@ -36,6 +36,8 @@ gem 'rspec-rails'
 
 gem 'zurb-foundation'
 
+gem 'haml'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

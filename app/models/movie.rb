@@ -12,7 +12,11 @@ class Movie < ActiveRecord::Base
   end
 
   def audience_rating
-    self.rotten_finder.ratings.audience_score
+    if self.rotten_finder != []
+      self.rotten_finder.ratings.audience_score
+    else
+      return "We are DEEPLY sorry that the movie was not found on Rotten Tomatoes."
+    end
   end
 
 end

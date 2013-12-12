@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Movie do
   let(:movie) { Movie.new }
   let(:rotten_finder_return) { OpenStruct.new(ratings: OpenStruct.new(audience_score: 84)) }
-  
+
   describe '#snippet' do
     context "when description is less than or equal to 50 characters" do
       it "returns the full description" do
@@ -35,6 +35,14 @@ describe Movie do
         allow(movie).to receive(:rotten_finder).and_return(rotten_finder_return)
 
         expect(movie.audience_rating).to eq(84)
+      end
+    end
+
+    context "when Movie is not found on Rotten Tomatoes" do
+      it "returns a string: 'We are DEEPLY sorry that the movie was not found on Rotten Tomatoes.'" do
+        allow(movie).to receive(:rotten_finder).and_return([])
+
+        expect(movie.audience_rating).to eq('We are DEEPLY sorry that the movie was not found on Rotten Tomatoes.')
       end
     end
   end

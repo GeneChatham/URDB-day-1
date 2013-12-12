@@ -8,6 +8,11 @@ class Movie < ActiveRecord::Base
   end
   
   def snippet
-    description.truncate 50
+    description.to_s.truncate 50
   end
+
+  def audience_rating
+    self.rotten_finder.ratings.audience_score
+  end
+
 end

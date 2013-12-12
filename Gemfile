@@ -32,6 +32,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'hirb'
+
 gem 'rspec-rails'
 
 gem 'zurb-foundation'

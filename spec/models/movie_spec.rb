@@ -39,10 +39,44 @@ describe Movie do
     end
 
     context "when Movie is not found on Rotten Tomatoes" do
-      it "returns a string: 'We are DEEPLY sorry that the movie was not found on Rotten Tomatoes.'" do
+      it "returns nil'" do
         allow(movie).to receive(:rotten_finder).and_return([])
 
-        expect(movie.audience_rating).to eq('We are DEEPLY sorry that the movie was not found on Rotten Tomatoes.')
+        expect(movie.audience_rating).to eq(nil)
+      end
+    end
+  end
+
+  describe '.average_rating' do
+    let(:movie2) { Movie.new }
+    context "when all movies can be found on Rotten Tomatoes" do
+      it "returns the average audience_score for all movies" do
+        allow(movie).to receive(:audience_rating).and_return(100)
+        allow(movie2).to receive(:audience_rating).and_return(50)
+        allow(Movie).to receive(:all).and_return([movie, movie2])
+
+        expect(Movie.average_rating).to eq(75)
+      end
+    end
+
+    context "when some movies are not found on Rotten Tomatoes" do
+      it "returns the average audience_score of the movies that were found" do
+        allow(movie).to receive(:audience_rating).and_return(nil)
+        allow(movie2).to receive(:audience_rating).and_return(50)
+        allow(Movie).to receive(:all).and_return([movie, movie2])
+
+        expect(Movie.average_rating).to eq(50)
+      end        
+
+    end
+
+    context "when no movies are found on Rotten Tomatoes" do
+      it "returns nil" do
+        allow(movie).to receive(:audience_rating).and_return(nil)
+        allow(movie2).to receive(:audience_rating).and_return(nil)
+        allow(Movie).to receive(:all).and_return([movie, movie2])
+
+        expect(Movie.average_rating).to eq(nil)
       end
     end
   end

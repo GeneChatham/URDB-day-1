@@ -16,7 +16,37 @@ class Movie < ActiveRecord::Base
     if self.rotten_finder != []
       self.rotten_finder.ratings.audience_score
     else
-      return "We are DEEPLY sorry that the movie was not found on Rotten Tomatoes."
+      return nil
+    end
+  end
+
+  def self.average_rating
+    
+    # #get all movie scores
+    # scores = self.all.collect do |movie|
+    #   movie.audience_rating
+    # end
+
+    # #add all movie scores together
+    # sum = scores.sum
+    # #divide by number of movies
+    # average = sum/scores.length
+
+    moviecount = 0
+    averagetotal = 0
+
+    Movie.all.each do |movie|
+      if movie.audience_rating != nil  
+        averagetotal += movie.audience_rating
+        moviecount += 1
+        puts averagetotal            
+        puts moviecount
+      end
+    end
+    if moviecount == 0
+      return nil
+    else
+      return (averagetotal / moviecount)
     end
   end
 
